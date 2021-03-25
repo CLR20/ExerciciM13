@@ -18,7 +18,7 @@ public class EmployeeDDBBJDBC {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String connect = "jdbc:mysql://localhost:3306/exercicim13";
-			this.cnt = DriverManager.getConnection(connect, "root", "lsdKJcnw34394xmmn903x4,.,.,");
+			this.cnt = DriverManager.getConnection(connect, "root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
