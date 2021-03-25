@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>EMPLOYEES</title>
+</head>
+<body>
+
+<h1>EMPLOYEES</h1>
+	<table border = 1>
+		<thead>
+			<tr><th> Id <th> Name <th> Job <th> Salary <th> DELETE <th> UPDATE
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${employees.empty}">
+				<td colspan = "2">No employees in the database.</td>
+			</tr>
+			<tr th:each="employee: ${employees}">
+				<td><span th:text="${employee.getId()}"></span></td>
+				<td><span th:text="${employee.getName()}"></span></td>
+				<td><span th:text="${employee.getJob()}"></span></td>
+				<td align="right"><span th:text="${employee.getSalary()}"></span></td>
+				<td align="center"><a th:href="@{/employees_deleted/}+${employee.id}">DELETE</a></td>
+				<td><a th:href="@{/employees_updated/}+${employee.id}">UPDATE</a></td>
+			</tr>
+		</tbody>	
+	</table>
+	<br><br>
+	
+	<form action="/employees_filtered/job" method="get">
+		JOB: 
+ 		<select id="job"  name ="job">
+			<option th:each="job: ${T(com.admin.ExerciciJavaM13.bean.Employee.Category).values()}"
+				th:value="${job}"
+				th:text="${job}">	
+			</option>
+		</select>
+		<br><br>	
+		<input type=submit name=submit value="Search by Job">
+	</form>
+	<br>
+	
+	<form th:action="${action}" method="post">
+		<br>
+		<input type=hidden name=id th:value="${employee?.id}">
+		NAME: <input type=text name=name th:value="${employee?.name}">
+		JOB: <select id="job" name="job">
+    			<option th:each="category : ${T(com.admin.ExerciciJavaM13.bean.Employee.Category).values()}"
+            	th:value="${category}"
+            	th:text="${category}" >   		
+    			</option>
+			</select>
+<!-- If we want to be able to set different salaries:
+			SALARY: <select id="salary" name="salary">
+				<option th:each="salary : ${T(com.admin.ExerciciJavaM13.bean.Employee.Salaries).values()}"
+				th:value="${salary}"
+				th:text="${salary}" >
+				</option>
+			</select>
+-->		<br><br>	
+		<input type=submit name=submit value="Update Employee">		
+	</form>
+	<br>
+	
+	<form action="/employees_created" method="post">
+		<br>		
+		NAME: <input type=text name=name>
+		JOB: <select id="job" name="job">
+    			<option th:each="category : ${T(com.admin.ExerciciJavaM13.bean.Employee.Category).values()}"
+            	th:value="${category}"
+            	th:text="${category}" >   		
+    			</option>
+			</select>		
+		<br><br>
+		<input type=submit name=submit value="Add Employee">
+	</form>
+	<br>
+	
+</body>
+</html>
